@@ -15,6 +15,9 @@ namespace CronHelper\Service;
  * Is simple storage of defined CRON jobs. These jobs are in-time scheduled 
  * (e.g. inserted into database) and than processed in schedule time.
  *
+ * This class is meaned as an internal class not for using outside the module.
+ * The only entry point outside the module is `CronService` self.
+ *
  * @package CronHelper
  * @subpackage Service
  * @author Ondřej Doněk <ondrejd@gmail.com>
@@ -32,37 +35,13 @@ class Registry
 	protected $registry = array();
 
 	/**
-	 * Constructor.
+	 * Returns count of currently registered jobs.
 	 *
-	 * You can pass array of jobs to set up registry immediately. This is commonly 
-	 * used whenever application has CRON jobs defined in its configuration.
-	 *
-	 * @param array $jobs (Optional.)
-	 * @return void
+	 * @return integer
 	 */
-	public function __construct(array $jobs = array())
+	public function count()
 	{
-		foreach ($jobs as $code => $job) {
-			if ($this->has($code)) {
-				//throw new \RuntimeException(sprintf('Job "%s" is already registered!', $code));
-				continue;
-			}
-
-			$frequency = array_key_exists('frequency', $job) ? $job['frequency'] : '';
-			$task = $this->prepareJobTask($job['task']);
-			$args = array_key_exists('args', $job) ? $job['args'] : array();
-
-			if (!($task instanceof \CronHelper\Service\JobTask\TaskInterface)) {
-				//throw new \InvalidArgumentException('Job task is not defined properly!');
-				continue;
-			}
-
-			$this->set($code, array(
-				'frequency' => $frequency,
-				'task' => $task,
-				'args' => $args,
-			));
-		}
+		return count($this->registry);
 	}
 
 	/**
@@ -98,6 +77,16 @@ class Registry
 	public function set($code, array $job)
 	{
 		$this->registry[$code] = $job;
+	}
+
+	/**
+	 * Clear (remove) registered jobs.
+	 *
+	 * @return void
+	 */
+	public function clear()
+	{
+		$this->registry = array();
 	}
 
 	/**
@@ -154,6 +143,7 @@ class Registry
 	 */
 	public static function destroy()
 	{
+		self::$instance->clear();
 		self::$instance = null;
 	}
 
@@ -166,7 +156,7 @@ class Registry
 	 * @param string $frequency Frequency of job's task executing.
 	 * @param array $task Description of job's task.
 	 * @param array $args Additional arguments for job's task.
-	 * @return JobRegistry
+	 * @return void
 	 * @throws \RuntimeException Whenever is given code already registered.
 	 * @throws \InvalidArgumentException Whenever array describing task is not correct.
 	 */
@@ -180,7 +170,7 @@ class Registry
 
 		$jobTask = $registry->prepareJobTask($task);
 
-		if (!($jobTask instanceof \CronHelper\Service\JobTask\TaskInterface)) {
+		if (!($jobTask instanceof JobTask\TaskInterface)) {
 			throw new \InvalidArgumentException('Job task is not defined properly!');
 		}
 
@@ -189,7 +179,5 @@ class Registry
 			'task' => $jobTask,
 			'args' => $args,
 		));
-
-		return $registry;
 	}
 }
