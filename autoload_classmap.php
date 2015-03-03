@@ -16,4 +16,9 @@ return array(
 	'CronHelper\Model\JobTable' => __DIR__ . '/src/CronHelper/Model/JobTable.php',
 	'CronHelper\Service\CronServiceInterface' => __DIR__ . '/src/CronHelper/Service/CronServiceInterface.php',
 	'CronHelper\Service\CronService' => __DIR__ . '/src/CronHelper/Service/CronService.php',
+	'CronHelper\Service\JobTask\TaskInterface' => __DIR__ . '/src/CronHelper/Service/JobTask/TaskInterface.php',
+	'CronHelper\Service\JobTask\AbstractTask' => __DIR__ . '/src/CronHelper/Service/JobTask/AbstractTask.php',
+	'CronHelper\Service\JobTask\CallbackTask' => __DIR__ . '/src/CronHelper/Service/JobTask/CallbackTask.php',
+	'CronHelper\Service\JobTask\ExternalTask' => __DIR__ . '/src/CronHelper/Service/JobTask/ExternalTask.php',
+	'CronHelper\Service\JobTask\RouteTask' => __DIR__ . '/src/CronHelper/Service/JobTask/RouteTask.php',
 );

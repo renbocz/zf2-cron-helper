@@ -41,7 +41,7 @@ abstract class AbstractTask implements TaskInterface
      */
     public function getOptions()
     {
-        return $this->getOptions();
+        return $this->options;
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractTask implements TaskInterface
      * @param array $options
      * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options = array())
     {
         $this->options = $options;
     }
