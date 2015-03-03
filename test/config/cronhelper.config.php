@@ -25,10 +25,9 @@ return array(
 		),
         'jobs' => array(
             'job1' => array(
-                'code' => 'job1',
                 'frequency' => '0 20 * * *',
                 'task' => array(
-                    'type' => 'CronHelper\Service\JobTask\RouteTask',
+                    'type' => 'route',
                     'options' => array(
                         'routeName' => 'cron_job1',
                     ),
@@ -40,7 +39,7 @@ return array(
             'job2' => array(
                 'frequency' => '0 0 1 * *',
                 'task' => array(
-                    'type' => 'CronHelper\Service\JobTask\CallbackTask',
+                    'type' => 'callback',
                     'options' => array(
                         'className' => 'YourClass',
                         'methodName' => 'doAction',
@@ -49,7 +48,7 @@ return array(
             ),
             'job3' => array(
                 'task' => array(
-                    'type' => 'CronHelper\Service\JobTask\ExternalTask',
+                    'type' => 'external',
                     'options' => array(
                         'command' => '/var/www/renbo/bin/export_dump.sh'
                     ),

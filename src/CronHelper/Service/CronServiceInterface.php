@@ -199,7 +199,8 @@ interface CronServiceInterface
 	/**
 	 * Returns pending jobs.
 	 *
-	 * @return /Traversable
+	 * @return \Zend\Db\ResultSet\HydratingResultSet
+	 * @throws \RuntimeException Throws exception whenever the database mapper is not set!
 	 */
 	public function getPending();
 

@@ -95,6 +95,11 @@ class IndexController extends AbstractActionController
 			$this->cronService = $this->getServiceLocator()->get('CronHelper\Service\CronService');
 		}
 
+		if ($this->cronService->hasDatabaseMapper() !== true) {
+			$mapper = $this->getJobMapper();
+			$this->cronService->setDatabaseMapper($mapper);
+		}
+
 		return $this->cronService;
 	}
 
@@ -142,7 +147,8 @@ class IndexController extends AbstractActionController
 		$console = $this->getConsole();
 		$this->printConsoleBanner($console);
 
-		$console->writeLine('TODO Finish indexAction!', ConsoleColor::LIGHT_RED);
+		//$cronService = $this->getCronService();
+		//$cronService->run();
 	}
 
 	/**

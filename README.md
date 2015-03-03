@@ -165,8 +165,8 @@ return array(
                 // Frequency of executing. If is omitted than the job will be
                 // executed only on demand.
                 'frequency' => '0 20 * * *',
-                // `RouteTask` defines task that is using existing application's
-                // route as a target job's action.
+                // `CronHelper\Service\JobTask\RouteTask` defines task that 
+                // is using existing application's route as a job's action.
                 'task' => array(
                     'type' => 'CronHelper\Service\JobTask\RouteTask',
                     'options' => array(
@@ -181,9 +181,10 @@ return array(
             // The second example job
             'job2' => array(
                 'frequency' => '0 0 1 * *',
-                // `CallbackTask` is task that executes regular PHP code.
+                // `CronHelper\Service\JobTask\CallbackTask` is task that 
+                // executes regular PHP code.
                 'task' => array(
-                    'type' => 'CronHelper\Service\JobTask\CallbackTask',
+                    'type' => 'callback',
                     'options' => array(
                         'className' => 'YourClass',
                         'methodName' => 'doAction',
@@ -193,9 +194,10 @@ return array(
             // The third example job - this job has no frequency defined
             // so can be executed only on direct demand from the code.
             'job3' => array(
-                // `ExternalTask` is used for executing external scripts.
+                // `CronHelper\Service\JobTask\ExternalTask` is used 
+                // for executing external scripts.
                 'task' => array(
-                    'type' => 'CronHelper\Service\JobTask\ExternalTask',
+                    'type' => 'external',
                     'options' => array(
                         'command' => '/var/www/renbo/bin/export_dump.sh'
                     ),
